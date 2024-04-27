@@ -1,8 +1,10 @@
 import React from 'react'
 
-function Button() {
+function Button(pros) {
   return (
-    <div>Button</div>
+   
+      <button className=' text-md px-3 py-2 bg-purple-300 rounded-xl font-semibold'> {pros.name} </button>
+   
   )
 }
 
