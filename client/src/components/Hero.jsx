@@ -1,14 +1,23 @@
 import React from "react";
 import Button from "./Button";
+import Phone from "../assets/images/tradingPhone.png"
+import chart from "../assets/images/chart.jpeg"
+import { NavLink } from "react-router-dom";
+// import {final} from "../assets/images/final.mp4"
+import CheckoutButton from "./CheckoutButton";
+import ReactPlayer from "react-player";
+
 
 function Hero() {
   return (
     <div className=" w-full  ">
-      <div className="max-h-[700px] relative rounded-md">
+     
+      <div className="max-h-[100vh]  rounded-md relative">
         {/* overlay div */}
         <div className="grid grid-cols-10 absolute w-full h-full text-gray-200 max-h[500px] bg-black/40  items-center z-0  ">
           <div className=" col-span-10  grid grid-cols-1 gap-2 lg:gap-6 lg:col-span-6 pl-4">
             <h1 className=" text-4 text-2xl md:text-5xl lg:text-7xl font-bold">
+             
               <span className="text-purple-500">Ski</span>
               Capital
               <span className="text-purple-500">Academy</span>
@@ -26,23 +35,44 @@ function Hero() {
               
             </p>
             {/* buttom */}
-            <div> <Button name='join us now' /></div>
+            <NavLink to=""> <CheckoutButton action='join us now' /></NavLink>
          
            
           </div>
           {/*phone image  */}
-          <div className=" hidden md:col-span-4  md:block lg:col-span-4  ">
+          <div className="  relative hidden    md:grid md:col-span-4  lg:col-span-4   ">
+            
             {/* image contenair */}
-            <div className=" max-h-[700px]   translate-x-[-20%]  translate-y-[-50%] top-[50%]  lg:absolute  " >
-              <img className=" w-full " src="https://www.interactivebrokers.com/images/web/ibkr-mobile-hero.png" alt="" /> </div>
+            <div className="  h-max-[700px]flex items-center   translate-x-[-20%]  translate-y-[-50%] top-[50%]  lg:absolute  " >
+             
+              <img className=" relative  h-[80%] " src={Phone} alt=""  />
+            
+          </div>
             </div>
         </div>
         {/* background image */}
+        {/* <ReactPlayer
+     
+     height='100%'
+     width='100%'
+    url={final}
+    controls={true} // Show playback controls
+    config={{
+      file: {
+        attributes: {
+          controlsList: 'nodownload', // Hide download button
+        },
+      },
+    }}
+   // Update played percentage
+  /> */}
+
         <img
           className="  w-full max-h-[700px] object-cover rounded-md  "
-          src="https://images.unsplash.com/photo-1535320903710-d993d3d77d29?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          src={chart }
           alt=""
         />
+        
       </div>
     </div>
   );

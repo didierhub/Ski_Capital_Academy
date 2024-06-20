@@ -1,23 +1,55 @@
 import {useState}from 'react'
+import { userAuthHook } from '../hook/UserHook';
+import { NavLink, useNavigate } from 'react-router-dom';
+import GoogleSignUp from '../components/GoogleSignUp';
+ 
 
 function Signup() {
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [loginType, setLoginType] = useState('login');
 
   // const { signup, isLoading, error } = useSignup();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [error,setError]=useState()
+  const {createUser,GoogleSignIn}=userAuthHook()
+  const navigate=useNavigate()
 
   const handleSubmit = async (e) => {
-    // e.preventDefault();
-    // await signup(firstName, lastName, email, userId, password);
+    e.preventDefault();
+    setError("");
+  
+    try {
+      // Assuming you have firstName and lastName variables defined in your component
+      await createUser(email, password, firstName, lastName);
+      navigate("/");
+    } catch (error) {
+      setError(error.message);
+      console.log(error.message);
+    }
   };
+  
+  
+  const handlegoogleSignUp =async()=>{
+    try{
+       await GoogleSignIn()
+      navigate("/")
+    }
+    catch(error){
+      console.log(error.message)
+      setError(error.message)
+    }
+  }
+  
   
   return (
     <form
     action=""
     onSubmit={handleSubmit}
-    className="   grid grid-cols-1  gap-x-2   w-[300px] border shadow-md h-[400px] absolute left-[50%] top-[50%]  translate-x-[-50%] translate-y-[-50%]  "
+    className="   grid grid-cols-1  gap-x-2   w-[300px] border shadow-md min-h-[450px] absolute left-[50%] top-[50%]  translate-x-[-50%] translate-y-[-50%]  "
   >
     <h3 className=" text-center text-2xl pt-3 text-purple-900">sing up</h3>
     <div className=" grid grid-cols-1  w-full ">
@@ -26,7 +58,7 @@ function Signup() {
         <input
           type="text"
           onChange={(e) => setFirstName(e.target.value)}
-          value={firstName}
+          name='firstName'
           required
           className=" border border-gray-400"
         />
@@ -36,7 +68,7 @@ function Signup() {
         <input
           type="text"
           onChange={(e) => setLastName(e.target.value)}
-          value={lastName}
+         name='lastname'
           required
           className=" border border-gray-400"
         />
@@ -46,9 +78,9 @@ function Signup() {
         <input
           type="email"
           onChange={(e) => setEmail(e.target.value)}
-          value={email}
+         name='email'
           required
-          className=" border border-gray-400"
+          className=" border border-gray-400 pl-1"
         />
       </div>
       <div className=" grid grid-cols-1 gap-1 px-4 ">
@@ -56,14 +88,23 @@ function Signup() {
         <input
           type="text"
           onChange={(e) => setPassword(e.target.value)}
-          value={password}
+        name='password'
           required
-          className=" border border-gray-400"
+          className=" border border-gray-400 pl-1"
         />
       </div>
      
      
     </div>
+    
+    <div className=' text-center flex items-center justify-center text-gray-500'><h1>already have account?  
+        <NavLink
+              to="/Login"
+              className=" text-center text-purple-600 underline"
+            >
+              Log in
+            </NavLink></h1>
+            </div>
     <div className=" flex justify-center items-center ">
       <button
         // disabled={isLoading}
@@ -73,7 +114,11 @@ function Signup() {
         sing up
       </button>
     </div>
-    {/* {error && <div className=" text-center">{error}</div>} */}
+  
+    {error && <div className="  text-sm text-center text-red-500 grid grid-cols-1 gap-1 px-4 ">{error}</div>} 
+      <h1 className=' text-center'>sign in with:</h1>
+       <GoogleSignUp handlegoogleSignUp={handlegoogleSignUp} />
+      
   </form>
 
   )
